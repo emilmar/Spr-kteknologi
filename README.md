@@ -1,4 +1,4 @@
-# Spr-kteknologi
+# Sprakteknologi
 
 These are the project files for the 2 week long machine learning project in course DD1418 language engineering at KTH
 
