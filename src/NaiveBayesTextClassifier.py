@@ -18,7 +18,7 @@ This class performs text classification using the Naive Bayes method.
 accuracy_global = []
 class NaiveBayesTextClassifier(object):
 
-    def __init__(self, size, withfilter=True):
+    def __init__(self, size, simple=False, withfilter=True):
         """
         Constructor. Read the training file and, possibly, the test
         file. If test file is null, read input from the keyboard.
@@ -43,8 +43,8 @@ class NaiveBayesTextClassifier(object):
         self.classified_categories = []
         self.cat_index = {'NEGATIVE': 0, 'NEUTRAL':1, 'POSITIVE':2}
         # The current training set.
-        self.training_set = Dataset(size, True, 'tweets_random.txt', 'percentage_random.txt', 'cat_random.txt', withfilter)
-        self.test_set = Dataset(1-size, False,'tweets_random.txt', 'percentage_random.txt', 'cat_random.txt', withfilter)
+        self.training_set = Dataset(size, True, 'data/tweets_random.txt', 'data/percentage_random.txt', 'data/cat_random.txt', simple, withfilter)
+        self.test_set = Dataset(1-size, False,'data/tweets_random.txt', 'data/percentage_random.txt', 'data/cat_random.txt', simple, withfilter)
         self.build_model()
         self.classify_testset(self.test_set)
 
@@ -186,13 +186,26 @@ class NaiveBayesTextClassifier(object):
         # ---------------------------------------------------------- #
 
 def main():
-    for i in np.arange(0.5,1.0,0.05):
-        nbtc = NaiveBayesTextClassifier(i, True)
-    for i in np.arange(0.5,1.0,0.05):
-        nbtc = NaiveBayesTextClassifier(i, False)
-    #for x in nbtc.classified_categories: print(x)
-    for row in accuracy_global:
-        print(row)
+    parser = argparse.ArgumentParser(description='NaiveBayesTextClassifier')
+    parser.add_argument('--all', '-a', action="store_true", default=False, help='Test all files (default False)')
+    parser.add_argument('--single', '-s', action="store_true", default = False, help='Test one file')
+    parser.add_argument('--simple', '-si', action="store_false", default=True, help='Test with simple model i.e one letter at a time (default True)')
+    parser.add_argument('--partition', '-p', type=float, default=0.5, help="Partition size for training set (default 0.5)")
+    parser.add_argument('--nofilter', '-nf', action="store_true", default=False, help='Without filter')
+    
+    arguments = parser.parse_args()
+
+    if arguments.all:
+        for i in np.arange(0.5,1.0,0.05):
+            nbtc = NaiveBayesTextClassifier(size=i, simple=arguments.simple, withfilter=arguments.nofilter)
+        for i in np.arange(0.5,1.0,0.05):
+            nbtc = NaiveBayesTextClassifier(size=i, simple=arguments.simple, withfilter=arguments.nofilter)
+        #for x in nbtc.classified_categories: print(x)
+        for row in accuracy_global:
+            print(row)
+
+    elif arguments.single:
+        nbtc = NaiveBayesTextClassifier(size=arguments.partition, simple=arguments.simple, withfilter=arguments.nofilter)
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 import codecs
 from Datapoint import Datapoint
+from DatapointSimple import DatapointSimple
 from collections import defaultdict
 import csv
 
@@ -11,7 +12,7 @@ class Dataset(object):
     no_of_categories = 3
     cat_name = ['NEGATIVE', 'NEUTRAL', 'POSITIVE']
 
-    def __init__(self, percentage, test_or_training, tweet_file, existance_file, category_file, withfilter):
+    def __init__(self, percentage, test_or_training, simple=False, tweet_file="tweets_random.txt", existance_file="percentage_random.txt", category_file="cat_random.txt", withfilter=True):
         # The datapoints.
         self.trainingfile = test_or_training
         self.point = []
@@ -36,11 +37,10 @@ class Dataset(object):
                     number_of_tweets = (len(tweet_lines))
                     lines_to_get = number_of_tweets * self.percentage_of_file
                     lines_to_get = int(lines_to_get)
-                    print(lines_to_get)
+                    print("Lines read: ", lines_to_get)
 
                     existence_lines = existence.readlines()
                     cat_lines =cat.readlines()
-                    #print(tweet_lines)
 
 
                     if self.trainingfile:
@@ -57,7 +57,10 @@ class Dataset(object):
 
                     for index, line in enumerate(tweet):
                         #dp  = Datapoint(tweet[index], cat[index],percentage[index], withfilter)
-                        dp = Datapoint(tweet[index], cat[index], 1, withfilter)
+                        if simple:
+                            dp = DatapointSimple(text=tweet[index], cat=cat[index], withfilter=withfilter)
+                        else:
+                            dp = Datapoint(tweet[index], cat[index], withfilter)
                         self.point.append(dp)
                         c_index = self.cat_name.index(dp.cat)
                         self.no_of_words[c_index] += dp.no_of_words
