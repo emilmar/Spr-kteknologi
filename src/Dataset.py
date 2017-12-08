@@ -12,7 +12,11 @@ class Dataset(object):
     no_of_categories = 3
     cat_name = ['NEGATIVE', 'NEUTRAL', 'POSITIVE']
 
+<<<<<<< HEAD
+    def __init__(self, percentage, test_or_training, tweet_file="tweets_random.txt", existance_file="percentage_random.txt", category_file="cat_random.txt",  simple=False, withfilter=True):
+=======
     def __init__(self, percentage, test_or_training, simple=False, tweet_file="tweets_random.txt", existance_file="percentage_random.txt", category_file="cat_random.txt", withfilter=True):
+>>>>>>> 153b733cdf367111bda241117afe42634916dd8d
         # The datapoints.
         self.trainingfile = test_or_training
         self.point = []
@@ -59,6 +63,12 @@ class Dataset(object):
                         #dp  = Datapoint(tweet[index], cat[index],percentage[index], withfilter)
                         if simple:
                             dp = DatapointSimple(text=tweet[index], cat=cat[index], withfilter=withfilter)
+<<<<<<< HEAD
+                        elif bigram:
+                            dp = Bigram_datapoint(text=tweet[index], cat=cat[index], withfilter=withfilter)
+
+=======
+>>>>>>> 153b733cdf367111bda241117afe42634916dd8d
                         else:
                             dp = Datapoint(tweet[index], cat[index], withfilter)
                         self.point.append(dp)

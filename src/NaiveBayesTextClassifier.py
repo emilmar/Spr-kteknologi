@@ -189,7 +189,11 @@ def main():
     parser = argparse.ArgumentParser(description='NaiveBayesTextClassifier')
     parser.add_argument('--all', '-a', action="store_true", default=False, help='Test all files (default False)')
     parser.add_argument('--single', '-s', action="store_true", default = False, help='Test one file')
+<<<<<<< HEAD
+    parser.add_argument('--simple', '-si', action="store_true", default=False, help='Test with simple model i.e one letter at a time (default True)')
+=======
     parser.add_argument('--simple', '-si', action="store_false", default=True, help='Test with simple model i.e one letter at a time (default True)')
+>>>>>>> 153b733cdf367111bda241117afe42634916dd8d
     parser.add_argument('--partition', '-p', type=float, default=0.5, help="Partition size for training set (default 0.5)")
     parser.add_argument('--nofilter', '-nf', action="store_true", default=False, help='Without filter')
     

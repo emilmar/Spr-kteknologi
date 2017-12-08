@@ -11,16 +11,13 @@ class Datapoint(object):
     """
     This class represents a text as a bag-of-words + a category.
     """
-<<<<<<< HEAD
     def __init__(self, text, cat, withfilter):
-=======
-    def __init__(self, text, cat, percentage, withfilter):
->>>>>>> 153b733cdf367111bda241117afe42634916dd8d
         # The category.
         self.cat = cat
         self.prep_cat()
+        self.bigrams = defaultdict(int)
         # The text represented as a map from the word to the number of occurrences.
-        self.word = defaultdict(float)
+        self.word = defaultdict(int)
 
         self.beginning = text[0:min(len(text),19)].replace('\n',' ')
 
@@ -51,17 +48,10 @@ class Datapoint(object):
                     if splitsign in token:
                         token = token.split(splitsign)
                         for t in token:
-<<<<<<< HEAD
                             self.word[t] += 1
 
             if token and type(token) is not list: #if not empty string
                 self.word[token] =+1
-=======
-                            self.word[t] += 1*percentage
-
-            if token and type(token) is not list: #if not empty string
-                self.word[token] =+1*percentage
->>>>>>> 153b733cdf367111bda241117afe42634916dd8d
         self.no_of_words = 0
         for value in self.word.values():
             self.no_of_words += value

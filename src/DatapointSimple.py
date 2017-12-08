@@ -32,8 +32,12 @@ class DatapointSimple(object):
         		if letter in unwanted_signs:
         			pass
         	if letter != " ": #if not blankspace
+<<<<<<< HEAD
+        		self.word[letter] += 1
+=======
         		print(letter)
         		self.word[token] += 1
+>>>>>>> 153b733cdf367111bda241117afe42634916dd8d
 
 
         # Number of letters in tweet
